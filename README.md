@@ -27,7 +27,7 @@ We extend our deepest gratitude to the medical professionals and hardware commun
 
 Every year, millions of premature infants are born into resource-constrained environments. In these critical first weeks of life, a stable, sterile environment is not a luxury—it is the difference between life and death. 
 
-Traditional commercial incubators cost upwards of **₹5,000,000 to ₹7,000,000** (₹5–7 Lakhs equivalent in local clinical contexts), making them inaccessible to thousands of rural clinics and developing healthcare centers. Furthermore, the physical interaction required to operate standard medical equipment constantly introduces the risk of cross-contamination—a leading cause of Healthcare-Associated Infections (HAIs) in neonatal intensive care units (NICUs).
+Traditional commercial incubators cost upwards of **₹1,50,000 to ₹7,00,000** (₹1.5–7 Lakhs equivalent in local clinical contexts), making them inaccessible to thousands of rural clinics and developing healthcare centers. Furthermore, the physical interaction required to operate standard medical equipment constantly introduces the risk of cross-contamination—a leading cause of Healthcare-Associated Infections (HAIs) in neonatal intensive care units (NICUs).
 
 ### Enter Neo-Sentry 1.0
 
