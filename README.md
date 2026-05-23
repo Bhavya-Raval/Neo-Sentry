@@ -184,17 +184,54 @@ When Wi-Fi infrastructure is available, Neo-Sentry enables full cloud-connected 
 
 ### Wi-Fi Connection Procedure
 
-1. Configure Wi-Fi credentials inside the firmware:
+Neo-Sentry supports both:
+- Online cloud-connected monitoring
+- Offline self-hosted fallback monitoring
+
+---
+
+### Option 1 — Hospital Wi-Fi Available (Online Mode)
+
+Configure the hospital Wi-Fi credentials inside the firmware source code:
 
 ```cpp
 // --- Wi-Fi Credentials ---
 const char* ssid     = "YOUR_WIFI_NAME";
 const char* password = "YOUR_WIFI_PASSWORD";
-To view the raw serial telemetry during debugging, use the following command via your local terminal:
+```
+
+After firmware upload:
+- The ESP32 connects to the hospital network
+- Telegram alerts become active
+- ThingSpeak cloud telemetry initializes
+- Google Sheets live logging begins automatically
+
+---
+
+### Option 2 — No Wi-Fi Infrastructure Available (Offline Mode)
+
+If no hospital Wi-Fi is available, Neo-Sentry automatically provisions a self-hosted fallback hotspot using the ESP32.
+
+### Offline Dashboard Access Steps
+
+1. Open Wi-Fi settings on your mobile device or computer.
+2. Connect to the Neo-Sentry ESP32 hotspot.
+3. Open your browser.
+4. Navigate to:
 
 ```plaintext
-pio device monitor -b 115200
+192.168.4.1
 ```
+
+### Offline Features Available
+
+- Real-time telemetry dashboard
+- Live environmental graphs
+- Alarm monitoring
+- Hardware activity visualization
+- Local monitoring without internet dependency
+
+This fallback architecture ensures uninterrupted neonatal monitoring even in low-resource or disconnected healthcare environments.
 
 ---
 
@@ -230,10 +267,13 @@ The Neo-Sentry ecosystem combines embedded intelligence, cloud telemetry, and li
 
 ### Core Sensor & Display Connections
 
-Component	Pin Connection
-Buzzer	Digital Pin D12
-LED	Digital Pin D18
-Fan (Relay Control)	Digital Pin D5
+### Component Pin Connections
+
+| Component | Pin Connection |
+|---|---|
+| Buzzer | Digital Pin D12 |
+| LED | Digital Pin D18 |
+| Fan (Relay Control) | Digital Pin D5 |
 
 Relay Module & External 9V Fan Isolation Wiring
 The cooling fan is driven by an external 9V battery power supply isolated via a mechanical relay module to protect the ESP32 motherboard rails.
@@ -260,7 +300,7 @@ ESP32
  └── MPU6050
 ```
 
-## Software Installation
+## Software Requirements
 
 1. Clone the repository to your local machine.
 
