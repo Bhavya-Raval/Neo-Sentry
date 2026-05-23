@@ -71,39 +71,125 @@ Technology built to protect premature lives, democratized for the world.
 
 Neo-Sentry is engineered around four core pillars of survival: **Asepsis, Stability, Awareness, and Affordability.**
 
-### **1. Aseptic Gesture-Based Touchless Control**
+### **1. Live Wi-Fi Connectivity**
 
-In a NICU, every physical touch is a potential vector for pathogens. Neo-Sentry eliminates the need for physical buttons or touchscreens. Using optical proximity sensing arrays, medical staff can navigate menus, adjust temperature targets, and silence alarms purely through calibrated hand gestures.
-- **Swipe Right/Left:** Navigate telemetry pages.
-- **Hold (Hover):** Confirm selection or toggle power states.
+Neo-Sentry establishes a continuous, stable wireless connection to facility networks with optimized low-RF transmission profiles. The ESP32 connects to hospital Wi-Fi infrastructure while maintaining persistent connectivity for real-time data streaming and remote monitoring.
 
-### **2. Real-Time Atmospheric Stabilization**
+### **2. Live OLED Telemetry & Monitoring**
 
-Premature infants cannot regulate their own body temperature. Neo-Sentry employs high-precision thermal and humidity sensors continuously feeding data into an aggressive PID control loop.
-- The system dynamically modulates heating elements and ventilation fans to maintain the micro-environment within a strict **0.5°C tolerance** of the target parameter.
-- Contactless respiration monitoring observes chest displacement to infer respiratory rates without distressing the infant with adhesive sensors.
+The onboard OLED display continuously visualizes:
+- Real-time temperature readings
+- Patient stillness tracking
+- Active alarm states
+- System connectivity status
 
-### **3. Cloud Telemetry & Asynchronous Alerts**
+This provides instant bedside feedback without requiring external monitoring devices.
 
-Awareness is critical. Neo-Sentry doesn't just display data locally; it pushes critical states to the cloud.
-- Utilizing **ntfy.sh**, the system broadcasts encrypted, real-time alerts to the smartphones of attending physicians.
-- From critical temperature deviations to power failure warnings, the care team is instantly notified, no matter where they are in the hospital.
+### **3. Automated Climate Hardware Switching**
 
-### **4. Extreme Affordability Paradigm**
+Neo-Sentry dynamically activates:
+- A cooling fan
+- A heating LED
 
-By utilizing off-the-shelf, mass-produced IoT components and open-source software, the total bill of materials (BOM) is drastically reduced. We replace bespoke, expensive medical-grade controllers with the versatile ESP32, achieving comparable reliability through redundant software architecture.
+whenever incubator temperatures breach configured clinical boundaries.
+
+The automation system maintains environmental stability using threshold-based control logic to ensure safe neonatal thermal conditions.
+
+### **4. Progressive Hardware Buzzer Alarm**
+
+If patient stillness exceeds a 14-second threshold, Neo-Sentry triggers a progressive physical buzzer alarm pulsing at 400ms intervals.
+
+This acts as an immediate bedside fail-safe alert mechanism independent of internet connectivity.
+
+### **5. Aseptic Optical Alarm Suppression**
+
+Medical staff can instantly suppress active alarms without physical contact by casting a flashlight beam over the optical sensor.
+
+This touchless interaction minimizes contamination risk inside sterile neonatal environments.
+
+### **6. Real-Time Telegram Bot Dispatches**
+
+Neo-Sentry broadcasts:
+- Temperature anomalies
+- Stillness tracking alerts
+- Alarm state transitions
+- System status notifications
+
+directly to healthcare staff through Telegram bot integration for remote monitoring access.
+
+### **7. Live Cloud Graphing via ThingSpeak**
+
+Environmental telemetry is streamed to ThingSpeak every 20 seconds across multiple live cloud fields, enabling:
+- Continuous monitoring
+- Historical trend analysis
+- Remote visualization dashboards
+- Browser-accessible environmental analytics
+
+### **8. Automated Google Sheets Logging**
+
+All sensor telemetry is automatically appended into cloud-hosted Google Sheets with synchronized timestamps, generating a continuously updating historical monitoring database.
+
+### **9. Self-Hosted Offline Fallback Network**
+
+For facilities without internet infrastructure, Neo-Sentry provisions a standalone local Wi-Fi hotspot (`192.168.4.1`) featuring:
+- Live telemetry
+- Interactive graphs
+- Real-time alerts
+- Local monitoring dashboards
+
+This ensures uninterrupted operation even during internet outages.
+
+### **10. On-Demand Local Python Reporting Engine**
+
+Neo-Sentry includes a standalone Python analytics engine capable of reading exported telemetry `.csv` files and automatically generating publication-ready clinical trend reports using `matplotlib`.
 
 ---
 
 ## Usage Instructions
 
-Deploying Neo-Sentry in a clinical environment is designed to be frictionless.
+Deploying Neo-Sentry in a clinical environment is designed to be simple, modular, and adaptable to both connected and offline healthcare infrastructures.
 
-1. **Power Initialization:** Connect the main power supply (12V DC input). The system will boot and perform a self-diagnostic sequence verifying all sensor baselines.
-2. **Network Handshake:** The ESP32 will attempt to connect to the pre-configured hospital Wi-Fi network. The onboard OLED will display `[ SYS O-LINE ]` upon success.
-3. **Parameter Configuration:** Use a sweeping right-hand gesture over the optical sensor to enter the setup menu. Hover to select the target temperature (default: 36.5°C).
-4. **Monitoring:** Once the infant is secured, the system operates autonomously. Subscribe to the designated `ntfy.sh` topic on your mobile device to receive alerts.
+### General System Initialization
 
+1. Connect the main ESP32 control unit to power.
+2. The system automatically initializes:
+   - OLED telemetry display
+   - Environmental sensors
+   - Motion monitoring systems
+   - Alarm modules
+3. Once initialization completes, the OLED dashboard begins displaying live telemetry.
+4. The system continuously monitors:
+   - Temperature conditions
+   - Patient stillness duration
+   - Alarm states
+   - Hardware switching conditions
+
+If abnormal conditions are detected:
+- The buzzer alarm activates
+- Cooling fan or heating LED responds automatically
+- Remote alerts are dispatched when network services are available
+
+---
+
+## Online Mode (Hospital Wi-Fi Available)
+
+When Wi-Fi infrastructure is available, Neo-Sentry enables full cloud-connected telemetry.
+
+### Features Available in Online Mode
+
+- Telegram Bot Alerts
+- ThingSpeak Cloud Graphing
+- Google Sheets Data Logging
+- Real-Time Remote Monitoring
+
+### Wi-Fi Connection Procedure
+
+1. Configure Wi-Fi credentials inside the firmware:
+
+```cpp
+// --- Wi-Fi Credentials ---
+const char* ssid     = "YOUR_WIFI_NAME";
+const char* password = "YOUR_WIFI_PASSWORD";
 To view the raw serial telemetry during debugging, use the following command via your local terminal:
 
 ```plaintext
@@ -114,38 +200,162 @@ pio device monitor -b 115200
 
 ## Tech Stack
 
-The Neo-Sentry ecosystem is a symphony of modern embedded hardware and agile cloud services:
+The Neo-Sentry ecosystem combines embedded intelligence, cloud telemetry, and lightweight healthcare automation infrastructure.
 
 - **Microcontroller:** Espressif ESP32 (Dual-core XTensa LX6)
 - **Framework:** C++ / Arduino Core (PlatformIO)
-- **Sensors:**
-  - APDS-9960 (RGB and Gesture Sensor)
-  - DHT22 / SHT31 (High-Precision Temperature & Humidity)
-  - VL53L0X (Time-of-Flight for Respiration Inference)
-- **Actuators:** 12V PTC Heating Elements, PWM DC Ventilation Fans
-- **Cloud Infrastructure:** ntfy.sh (HTTP POST based pub-sub notification service)
-- **Display:** 0.96" I2C OLED (SSD1306)
 
+### Sensors
+- APDS9960 (Gesture and Optical Sensor)
+- BMP180 (Temperature and Pressure Sensor)
+- MPU6050 (Motion and Stillness Detection)
+
+### Actuators
+- 5V DC Cooling Fan
+- Red LED
+- Active Hardware Buzzer
+
+### Cloud Infrastructure
+- ThingSpeak
+- Google Sheets API
+- Telegram Bot API
+
+### Display
+- 0.96" I2C OLED Display (SSD1306)
 ---
 
 ## Requirements / Installation
 
 ### Hardware Requirements
-- Custom Neo-Sentry PCB or standard breadboard wiring.
-- Components listed in the Tech Stack.
 
-### Software Installation
+### Core Sensor & Display Connections
+
+Component	Pin Connection
+Buzzer	Digital Pin D12
+LED	Digital Pin D18
+Fan (Relay Control)	Digital Pin D5
+
+Relay Module & External 9V Fan Isolation Wiring
+The cooling fan is driven by an external 9V battery power supply isolated via a mechanical relay module to protect the ESP32 motherboard rails.
+
+Relay Signal Connections:
+VIN (Signal Input): Connect to D5 on the ESP32.
+
+VCC (Power): Connect to 3.3V on the ESP32.
+
+GND (Ground): Connect to GND on the ESP32.
+
+High-Power Load Connections:
+COM (Common Terminal): Connect to the Positive (+) terminal of the 9V battery.
+
+NO (Normally Open Terminal): Connect to the Positive (+) terminal of the Fan.
+
+Ground Return Link: Connect the Negative (-) terminal of the Fan and the Negative (-) terminal of the 9V battery directly back to the GND rail of the ESP32 motherboard.
+
+```plaintext
+ESP32
+ ├── APDS9960
+ ├── OLED Display
+ ├── BMP180
+ └── MPU6050
+```
+
+## Software Installation
 
 1. Clone the repository to your local machine.
+
 2. Open the project folder in **VS Code** with the **PlatformIO** extension installed.
-3. Rename `secrets.example.h` to `secrets.h` and insert your local Wi-Fi credentials and target `ntfy.sh` topic.
+
+3. Configure your Wi-Fi credentials inside the firmware source code:
 
 ```cpp
-// secrets.h
-#define WIFI_SSID "Hospital_Secure_Network"
-#define WIFI_PASS "securepassword123"
-#define NTFY_TOPIC "neosentry_ward_A"
+// --- Wi-Fi Credentials ---
+const char* ssid     = "YOUR_WIFI_NAME";
+const char* password = "YOUR_WIFI_PASSWORD";
 ```
+
+4. Configure your Telegram Chat ID:
+
+```cpp
+#define CHAT_ID "PASTE_YOUR_CHAT_ID_HERE"
+```
+
+5. Install the required Python dependencies for the local reporting engine:
+
+```plaintext
+pip install pandas matplotlib weasyprint
+```
+
+6. Compile and upload the firmware to the ESP32:
+
+```plaintext
+pio run --target upload
+```
+
+---
+
+## Connecting to the Neo-Sentry Telegram Bot
+
+To receive real-time incubator alerts and monitoring updates directly on your smartphone:
+
+### Step 1 — Open the Bot
+
+Search for the following bot inside Telegram:
+
+```plaintext
+@Incubator_neoSentry_bot
+```
+
+### Step 2 — Activate the Bot
+
+Press the **Start** button to allow the bot to send notifications to your account.
+
+### Step 3 — Retrieve Your Personal Chat ID
+
+1. Search for:
+
+```plaintext
+@userinfobot
+```
+
+2. Press **Start**.
+3. Copy the numerical ID provided by the bot.
+
+### Step 4 — Insert Chat ID into Firmware
+
+Paste your copied Chat ID into the firmware configuration:
+
+```cpp
+#define CHAT_ID "PASTE_YOUR_COPIED_ID_HERE"
+```
+
+---
+
+## Monitoring Live Cloud Telemetry
+
+### ThingSpeak Dashboard
+
+The Neo-Sentry system streams live telemetry directly to ThingSpeak cloud dashboards.
+
+Access the live dashboard here:
+
+```plaintext
+https://thingspeak.mathworks.com/channels/3388454
+```
+
+---
+
+## Google Sheets Historical Logging
+
+All environmental telemetry and operational timestamps are continuously appended to a live Google Sheets database.
+
+Access the public telemetry sheet here:
+
+```plaintext
+https://docs.google.com/spreadsheets/d/1CYqXfj2ydENCGktqIENCoc1UpGHSjCNpTQpsZO7Fu88/edit?gid=0#gid=0
+```
+
+The document is configured as read-only for public safety while still updating dynamically in real time.
 
 4. Compile and upload the firmware to the ESP32:
 
@@ -198,5 +408,4 @@ We believe that cutting-edge healthcare technology shouldn't be confined to elit
 
 1. World Health Organization (WHO) - Guidelines on basic newborn resuscitation.
 2. Espressif Systems - ESP32 Technical Reference Manual.
-3. ntfy.sh Official Documentation - Push notifications made easy.
-4. Open-source libraries utilized: Adafruit Unified Sensor, ArduinoJson.
+3. Libraries utilized: myosa.h, WiFi.h, Wire.h, WiFiClientSecure.h, UniversalTelegramBot.h, ArduinoJson.h, ThingSpeak.h, ESP_Google_Sheet_Client.h
