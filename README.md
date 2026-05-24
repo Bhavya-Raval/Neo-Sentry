@@ -89,7 +89,7 @@ Technology built to protect premature lives, democratized for the world.
 <i>Python Trend Graphs</i>
 </p>
 
-### Videos
+### Video
 
 <video controls width="100%">
 <source src="/Demonstration.mp4" type="video/mp4">
