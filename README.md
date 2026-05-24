@@ -89,10 +89,14 @@ Technology built to protect premature lives, democratized for the world.
 <i>Python Trend Graphs</i>
 </p>
 
-### Video
+### Videos
 
 <video controls width="100%">
-<source src="/Demonstration.mp4" type="video/mp4">
+<source src="/demonstration.mp4" type="video/mp4">
+</video>
+
+<video controls width="100%">
+<source src="/presentation.mp4" type="video/mp4">
 </video>
 
 ---
@@ -469,7 +473,7 @@ neo-sentry/
     ├── neo_sentry_self_hosted.ino
     ├── neo_sentry_statistics_report.py
     └── neo_sentry_wifi.ino
-
+```
 ---
 
 ## Future Roadmap
