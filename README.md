@@ -430,7 +430,7 @@ The document is configured as read-only for public safety while still updating d
 4. Compile and upload the firmware to the ESP32:
 
 ```plaintext
-pio run --target upload
+  Arduino IDE 115200
 ```
 
 ---
@@ -440,7 +440,7 @@ pio run --target upload
 The firmware is structured for modularity and easy contribution:
 
 ```plaintext
-```text id="wq6f9n"
+
 neo-sentry/
 ├── README.md                           # Main project documentation
 │
