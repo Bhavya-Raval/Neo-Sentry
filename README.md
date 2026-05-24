@@ -442,9 +442,9 @@ The firmware is structured for modularity and easy contribution:
 ```plaintext
 
 neo-sentry/
-├── README.md                           # Main project documentation
+├── README.md
 │
-├── images/                             # Project image assets
+├── images/
 │   ├── neo_sentry_top_view.jpeg
 │   ├── front_view.jpeg
 │   ├── telegram_notifications.jpeg
@@ -455,21 +455,20 @@ neo-sentry/
 │   ├── sh_dashboard_2.jpeg
 │   └── python_graphs.png
 │
-├── videos/                             # Demonstration and prototype videos
-│    └── Demonstration.mp4
-│   
+├── videos/
+│   ├── demonstration.mp4
+│   └── presentation.mp4
 │
-├── files/                              # Research and supporting documents
+├── files/
 │   ├── neo_sentry_discharge_report.pdf
 │   ├── connect_to_neo_sentry_steps.pdf
+│   ├── neo_sentry_sample_data.csv
 │   └── neo_sentry_ppt.pptx
 │
-└── codes/                              # Source code and firmware
+└── codes/
     ├── neo_sentry_self_hosted.ino
-    ├── neo_sentry_wifi.ino
-    └── neo_sentry_statistics_report.py
-```
-
+    ├── neo_sentry_statistics_report.py
+    └── neo_sentry_wifi.ino
 
 ---
 
