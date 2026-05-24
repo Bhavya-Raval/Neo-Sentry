@@ -2,7 +2,7 @@
 publishDate: 2026-05-14T00:00:00Z
 title: Neo-Sentry 1.0 — Touchless Neonatal Intelligence for Affordable Critical Care
 excerpt: A low-cost smart neonatal incubator ecosystem combining IoT automation, atmospheric intelligence, and aseptic gesture control for safer neonatal survival.
-image: neo-sentry-cover.jpg
+image: neo_sentry_top_view.jpeg
 tags:
   - healthcare-iot
   - neonatal-care
@@ -45,24 +45,54 @@ Technology built to protect premature lives, democratized for the world.
 ### Images
 
 <p align="center">
-<img src="/neo-sentry-system-architecture.jpg" width="800"><br/>
-<i>The Neo-Sentry 1.0 Core Control Unit: A sleek, 3D-printable housing protecting the ESP32 intelligence.</i>
+<img src="/neo_sentry_system_top_view.jpeg" width="800"><br/>
+<i>Neo Sentry</i>
 </p>
 
 <p align="center">
-<img src="/neo-sentry-gesture-interface.jpg" width="800"><br/>
-<i>Aseptic Interaction: A nurse adjusting thermal parameters using intuitive, touchless hand gestures.</i>
+<img src="/front_view.jpeg" width="800"><br/>
+<i>ICU Interface Layout</i>
 </p>
 
 <p align="center">
-<img src="/neo-sentry-telemetry-dashboard.jpg" width="800"><br/>
-<i>Real-time atmospheric telemetry and push notifications delivered directly to a physician's mobile device via ntfy.sh.</i>
+<img src="/telegram_notifications.jpeg" width="800"><br/>
+<i>Critical Alert System</i>
+</p>
+
+<p align="center">
+<img src="/thingspeak.jpeg" width="800"><br/>
+<i>ThingSpeak Analytics</i>
+</p>
+
+<p align="center">
+<img src="/google_sheets.jpeg" width="800"><br/>
+<i>Cloud Data Logging</i>
+</p>
+
+<p align="center">
+<img src="/oled_screen.jpeg" width="800"><br/>
+<i>OLED Telemetry Display</i>
+</p>
+
+<p align="center">
+<img src="/sh_dashboard_1.jpeg" width="800"><br/>
+<i>Central Monitoring Dashboard-1</i>
+</p>
+
+<p align="center">
+<img src="/sh_dashboard_2.jpeg" width="800"><br/>
+<i>Central Monitoring Dashboard-2</i>
+</p>
+
+<p align="center">
+<img src="/python_graphs.png" width="800"><br/>
+<i>Python Trend Graphs</i>
 </p>
 
 ### Videos
 
 <video controls width="100%">
-<source src="/neo-sentry-cinematic-trailer.mp4" type="video/mp4">
+<source src="/Demonstration.mp4" type="video/mp4">
 </video>
 
 ---
@@ -410,19 +440,36 @@ pio run --target upload
 The firmware is structured for modularity and easy contribution:
 
 ```plaintext
+```text id="wq6f9n"
 neo-sentry/
-├── src/
-│   ├── main.cpp                 # Core application loop
-│   ├── GestureControl.cpp       # APDS-9960 driver logic
-│   ├── ThermalRegulation.cpp    # PID loop for heating/cooling
-│   ├── CloudTelemetry.cpp       # Wi-Fi and ntfy.sh HTTP client
-├── include/
-│   ├── Config.h                 # Pin definitions and global constants
-│   ├── secrets.h                # Network credentials (git-ignored)
-├── platformio.ini               # Build configurations and library dependencies
-├── README.md                    # Project documentation
-└── hardware/                    # Schematics and 3D printable STL files
+├── README.md                           # Main project documentation
+│
+├── images/                             # Project image assets
+│   ├── neo_sentry_top_view.jpeg
+│   ├── front_view.jpeg
+│   ├── telegram_notifications.jpeg
+│   ├── thingspeak.jpeg
+│   ├── google_sheets.jpeg
+│   ├── oled_screen.jpeg
+│   ├── sh_dashboard_1.jpeg
+│   ├── sh_dashboard_2.jpeg
+│   └── python_graphs.png
+│
+├── videos/                             # Demonstration and prototype videos
+│    └── Demonstration.mp4
+│   
+│
+├── files/                              # Research and supporting documents
+│   ├── neo_sentry_discharge_report.pdf
+│   ├── connect_to_neo_sentry_steps.pdf
+│   └── neo_sentry_ppt.pptx
+│
+└── codes/                              # Source code and firmware
+    ├── neo_sentry_self_hosted.ino
+    ├── neo_sentry_wifi.ino
+    └── neo_sentry_statistics_report.py
 ```
+
 
 ---
 
