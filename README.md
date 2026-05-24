@@ -45,7 +45,7 @@ Technology built to protect premature lives, democratized for the world.
 ### Images
 
 <p align="center">
-<img src="/neo_sentry_system_top_view.jpeg" width="800"><br/>
+<img src="/neo_sentry_top_view.jpeg" width="800"><br/>
 <i>Neo Sentry</i>
 </p>
 
